@@ -1,5 +1,6 @@
 <template>
     <form action="#" @submit.prevent="addNewCost()">
+        <div class="exit"> <button type="button" @click="closeWindow">X</button></div>
         <h3>Fill position of your new cost</h3>
         <p>Today : {{ today }}</p>
         <select class="input" v-model="category">
@@ -8,7 +9,7 @@
             </option>
         </select>
         <input class="input" type="number" v-model="value" placeholder="cost of purchase">
-        <button>Add +</button>
+        <button type="submit">Add +</button>
         <p v-show="this.$store.getters.getInvertRedact">
             You are redacting now: <br> <span>date</span> {{ this.$store.getters.getRedactProd.date }},
             <span>category</span> {{ this.$store.getters.getRedactProd.category }},
@@ -36,17 +37,23 @@ export default {
             let purchase = {}
             if (this.$store.getters.getInvertRedact) {
                 let prod = this.$store.getters.getRedactProd
-                purchase = { id: prod.id, date: prod.date, category: this.category, value: +this.value }
+                purchase = { id: prod.id, isDone: false, date: prod.date, category: this.category, value: +this.value }
                 this.$store.commit("setNewCost", purchase);
             } else {
                 let id = Math.floor(Math.random() * (100));
                 while (this.$store.getters.getProducts.find(e => e.id == id)) {
                     id++
                 }
-                purchase = { id: id, date: this.today, category: this.category, value: +this.value }
-                this.$store.commit("setNewCost", purchase);
+                purchase = { id: id, isDone: false, date: this.today, category: this.category, value: +this.value }
+                this.$store.commit("setNewCost", purchase)
             }
-            this.$store.commit("setShow");
+            this.$store.commit("setShow")
+        },
+        closeWindow() {
+            this.$store.commit("setShow")
+            if (this.$store.getters.getInvertRedact) {
+                this.$store.commit("setIsRedact")
+            }
         }
     },
     computed: {
@@ -55,11 +62,17 @@ export default {
         },
     },
     mounted() {
-        if (this.$store.getters.getCategories.length == 0) {
+        if (this.$store.getters.getCategories.length === 0) {
             this.$store.dispatch("getCategoryList")
         }
-        this.category = this.$route.params.category
-        this.value = this.$route.params.cost
+        if (this.$route.params.category) {
+            this.category = this.$route.params.category
+            this.value = this.$route.params.cost
+        } else if (this.$store.getters.getInvertRedact) {
+            this.category = this.$store.getters.getRedactProd.category
+            this.value = this.$store.getters.getRedactProd.value
+        }
+
     }
 }
 </script>

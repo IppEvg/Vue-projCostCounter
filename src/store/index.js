@@ -22,7 +22,7 @@ export default createStore({
     getShow: (state) => state.show,
     getPages: (state) => state.pages,
     getInterval: (state) => state.interval,
-    getSumm: (state) => state.products.reduce((sum, iteration) => sum + iteration.value, 0),
+    getSumm: (state) => state.products.filter(e => e.isDone === false).reduce((sum, iteration) => sum + iteration.value, 0),
     getCategories: (state) => state.categories,
     getFirstCategory: (state) => state.categories[0],
     getInvertRedact: (state) => state.isRedact,
@@ -41,12 +41,13 @@ export default createStore({
       }
     },
     setShow: (state, payload) => {
-      state.show = !state.show
       if (payload) {
         state.isRedact = !state.isRedact
-        state.redactProd = payload
+        state.redactProd = { ...payload }
       }
+      state.show = !state.show
     },
+    setIsRedact: (state) => state.isRedact = false,
     delProduct: (state, payload) => {
       const prod = state.products.findIndex(e => e.id == payload.id)
       state.products.splice(prod, 1)
@@ -61,7 +62,11 @@ export default createStore({
       }
     },
     addPage: (state, payload) => state.pages = [...state.pages, payload],
-    setCategories: (state, payload) => state.categories.push(payload)
+    setCategories: (state, payload) => state.categories.push(payload),
+    changeDone: (state, payload) => {
+      let string = state.products.find(e => e.id === payload)
+      return string.isDone = !string.isDone
+    }
 
   },
   actions: {
@@ -84,7 +89,7 @@ export default createStore({
           while (list.find(e => e.id == id)) {
             id++
           }
-          list.push({ id: id, date: date, category: word, value: cost })
+          list.push({ id: id, isDone: false, date: date, category: word, value: cost })
         }
         resolve(list)
       })

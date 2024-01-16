@@ -9,6 +9,7 @@
         <p>Summary costs: <span class="summ">{{ this.$store.getters.getSumm }}</span></p>
         <div class="list">
             <div class="item color">
+                <p>Done</p>
                 <p>Id</p>
                 <p>Date</p>
                 <p>Purchase</p>
@@ -16,14 +17,22 @@
                 <p>Redact</p>
                 <p>Del</p>
             </div>
-            <div v-for="item of getProd" key="item.id" class="item">
+            <div v-for="item of getProd" key="item.id" :class="{ item: true, done: item.isDone }">
+                <input type="checkbox" @change="onChangeDone(item.id)" :checked="item.isDone" />
                 <p>{{ item.id }}</p>
                 <p>{{ item.date }}</p>
                 <p>{{ item.category }}</p>
                 <p>{{ item.value }}</p>
-                <div><v-btn variant="outlined" @click="showChenge(item)"><v-img src="../assets/edit.svg"
-                            :width="24" /></v-btn></div>
-                <div><v-btn variant="outlined" @click="deleteProduct(item)"><v-img src="../assets/del.svg" :width="24" />
+                <div><v-btn variant="outlined" @click="showChenge(item)" v-if="item.isDone" disabled><v-img
+                            src="../assets/edit.svg" :width="24" :class="{ disadled: item.isDone }" /></v-btn>
+                    <v-btn variant="outlined" @click="showChenge(item)" v-else><v-img src="../assets/edit.svg" :width="24"
+                            :class="{ disadled: item.isDone }" /></v-btn>
+                </div>
+                <div><v-btn variant="outlined" @click="deleteProduct(item)" v-if="item.isDone" disabled><v-img
+                            src="../assets/del.svg" :width="24" />
+                    </v-btn>
+                    <v-btn variant="outlined" @click="deleteProduct(item)" v-else><v-img src="../assets/del.svg"
+                            :width="24" />
                     </v-btn>
                 </div>
             </div>
@@ -36,21 +45,16 @@ import NewCostForm from './NewCostForm.vue';
 
 export default {
     name: "costlist",
-
-    data() {
-        return {
-
-        };
-    },
-
     components: { NewCostForm },
-
     methods: {
         showChenge(item) {
             this.$store.commit("setShow", item)
         },
         deleteProduct(item) {
             this.$store.commit("delProduct", item)
+        },
+        onChangeDone(id) {
+            this.$store.commit("changeDone", id)
         }
     },
     computed: {
@@ -105,7 +109,13 @@ export default {
 
 .item {
     display: grid;
-    grid-template-columns: 0.3fr 1fr 1fr 1fr 0.2fr 0.2fr;
+    grid-template-columns: 0.13fr 0.3fr 1fr 1fr 1fr 0.2fr 0.2fr;
+
+    input {
+        padding: 4px 0;
+        border: 1px solid black;
+        margin: 20%;
+    }
 
     p {
         padding: 4px 0;
@@ -130,6 +140,14 @@ export default {
         .v-btn--size-default {
             min-width: 45px;
         }
+    }
+}
+
+.done {
+    color: #ccc;
+
+    p {
+        text-decoration: line-through;
     }
 }
 
