@@ -12,6 +12,11 @@ const routes = [
     component: HomeView
   },
   {
+    path: '/about',
+    name: 'AboutUs',
+    component: () => import('../views/AboutUs')
+  },
+  {
     path: '/add/:category?/:cost?',
     name: 'AddView',
     component: AddView

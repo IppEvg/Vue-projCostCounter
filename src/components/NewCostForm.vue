@@ -80,6 +80,7 @@ export default {
 <style lang="scss" scoped>
 form {
     margin: 0;
+    position: relative;
 
     h3,
     p,
@@ -103,13 +104,19 @@ form {
     }
 
     button {
-        padding: 2px 30px;
+        padding: 1px 8px;
         background-color: rgb(223, 223, 223);
         border-style: solid;
     }
 
     span {
         color: brown;
+    }
+
+    .exit {
+        position: absolute;
+        top: 3px;
+        right: 3px;
     }
 }
 </style>

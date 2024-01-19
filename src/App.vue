@@ -1,21 +1,29 @@
+
 <template>
   <v-app>
     <v-app-bar>
-      <v-btn density="compact" elevation="4" class="broun">
+      <v-btn density="compact" elevation="4" class="broun" to="/">
         Home
       </v-btn>
-      <v-btn density="compact" elevation="4" class="broun">
+      <v-btn density="compact" elevation="4" class="broun" to="/about">
         About us
       </v-btn>
     </v-app-bar>
-    <v-main>
-      <nav>
-      </nav>
+    <v-main class="nav">
       <router-view />
     </v-main>
-    <v-footer class="footer"></v-footer>
+    <v-footer class="footer">
+      <div class="copyright">
+        &copy;
+      </div>
+      <div class="links">
+        <p> tel: 8(905)555-55-20</p>
+        <img src="./assets/icons/telegram (1).svg" alt="Telegram" />: t-me/cost-counterMsd345
+      </div>
+    </v-footer>
   </v-app>
 </template>
+
 
 <style lang="scss">
 #app {
@@ -26,8 +34,9 @@
   color: #2c3e50;
 }
 
-nav {
-  padding: 30px;
+.nav {
+  margin-top: 30px;
+  box-sizing: border-box;
 
   a {
     font-weight: bold;
@@ -53,5 +62,8 @@ nav {
 .footer {
   background-color: #b1b3b6;
   max-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>

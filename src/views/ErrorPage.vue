@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="err">
         <h1> ERROR </h1>
         <h2>This page is not defined</h2>
     </div>
@@ -11,3 +11,9 @@ export default {
 
 }
 </script>
+<style lang="scss">
+.err {
+    margin: 0 auto;
+    text-align: center;
+}
+</style>
