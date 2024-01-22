@@ -18,7 +18,11 @@
       </div>
       <div class="links">
         <p> tel: 8(905)555-55-20</p>
-        <img src="./assets/icons/telegram (1).svg" alt="Telegram" />: t-me/cost-counterMsd345
+        <div class="messanger">
+          <div><v-img src="./assets/telegr.svg" alt="Telegram" /></div>
+          <div>: t-me/cost-counterMsd345</div>
+        </div>
+
       </div>
     </v-footer>
   </v-app>
@@ -65,5 +69,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.messanger {
+  display: flex;
+  max-height: 20px;
+
+  div {
+    height: 20px;
+    min-width: 20px;
+  }
+
 }
 </style>
