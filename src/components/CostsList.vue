@@ -9,13 +9,13 @@
         <p>Summary costs: <span class="summ">{{ this.$store.getters.getSumm }}</span></p>
         <div class="list">
             <div class="item color">
-                <p>Done</p>
+                <p></p>
                 <p>Id</p>
                 <p>Date</p>
                 <p>Purchase</p>
                 <p>Cost</p>
-                <p>Redact</p>
-                <p>Del</p>
+                <div class="min">Red</div>
+                <div class="min">Del</div>
             </div>
             <div v-for="item of getProd" key="item.id" :class="{ item: true, done: item.isDone }">
                 <input type="checkbox" @change="onChangeDone(item.id)" :checked="item.isDone" />
@@ -24,15 +24,15 @@
                 <p>{{ item.category }}</p>
                 <p>{{ item.value }}</p>
                 <div><v-btn variant="outlined" @click="showChenge(item)" v-if="item.isDone" disabled><v-img
-                            src="../assets/edit.svg" :width="24" :class="{ disadled: item.isDone }" /></v-btn>
-                    <v-btn variant="outlined" @click="showChenge(item)" v-else><v-img src="../assets/edit.svg" :width="24"
+                            src="../assets/edit.svg" :width="18" :class="{ disadled: item.isDone }" /></v-btn>
+                    <v-btn variant="outlined" @click="showChenge(item)" v-else><v-img src="../assets/edit.svg" :width="18"
                             :class="{ disadled: item.isDone }" /></v-btn>
                 </div>
                 <div><v-btn variant="outlined" @click="deleteProduct(item)" v-if="item.isDone" disabled><v-img
-                            src="../assets/del.svg" :width="24" />
+                            src="../assets/del.svg" :width="18" />
                     </v-btn>
                     <v-btn variant="outlined" @click="deleteProduct(item)" v-else><v-img src="../assets/del.svg"
-                            :width="24" />
+                            :width="18" />
                     </v-btn>
                 </div>
             </div>
@@ -103,34 +103,41 @@ export default {
 }
 
 .list {
+    display: grid;
+    grid-template-rows: repeat(auto-fill);
     border: 1px solid black;
     margin-top: 30px;
 }
 
 .item {
     display: grid;
-    grid-template-columns: 0.13fr 0.3fr 1fr 1fr 1fr 0.2fr 0.2fr;
+    grid-template-columns: 0.2fr 0.3fr 1fr 1fr 1fr 0.2fr 0.2fr;
+    max-height: fit-content;
 
     input {
-        padding: 4px 0;
-        border: 1px solid black;
-        margin: 20%;
+        box-sizing: border-box;
+        margin: 10%;
     }
 
     p {
         padding: 4px 0;
         border: 1px solid black;
         margin: 2px;
+        box-sizing: border-box;
+        vertical-align: middle;
     }
 
     div {
         display: flex;
         justify-content: center;
         align-items: center;
+        box-sizing: border-box;
 
         button {
-            width: 90%;
-            height: 70%;
+            max-width: 90%;
+            max-height: 90%;
+
+
 
             img {
                 max-width: 45%;
@@ -173,5 +180,22 @@ export default {
 .form-enter-active,
 .form-leave-active {
     transition: 0.7s;
+}
+
+.min {
+    min-width: 52px;
+}
+
+@media (max-width: 600px) {
+    .wrap {
+        min-height: 299px;
+    }
+
+    .item {
+        p {
+            padding: 2px 0;
+            font-size: 12px;
+        }
+    }
 }
 </style>

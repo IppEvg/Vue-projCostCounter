@@ -22,12 +22,10 @@
           <div><v-img src="./assets/telegr.svg" alt="Telegram" /></div>
           <div>: t-me/cost-counterMsd345</div>
         </div>
-
       </div>
     </v-footer>
   </v-app>
 </template>
-
 
 <style lang="scss">
 #app {
@@ -41,6 +39,7 @@
 .nav {
   margin-top: 30px;
   box-sizing: border-box;
+  min-height: fit-content;
 
   a {
     font-weight: bold;
@@ -68,7 +67,7 @@
   max-height: 60px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .messanger {
